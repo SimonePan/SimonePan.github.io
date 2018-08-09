@@ -7,18 +7,18 @@
   
   <title>高性能MySQl读书笔记-第一天.md | 凡心所向，素履所往</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。 第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。 第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==">
+  <meta name="description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高性能MySQl读书笔记-第一天.md">
 <meta property="og:url" content="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/index.html">
 <meta property="og:site_name" content="凡心所向，素履所往">
-<meta property="og:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。 第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。 第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==">
+<meta property="og:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/mysql逻辑架构.png">
-<meta property="og:updated_time" content="2018-08-09T03:03:05.759Z">
+<meta property="og:updated_time" content="2018-08-09T03:54:24.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能MySQl读书笔记-第一天.md">
-<meta name="twitter:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。 第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。 第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==">
+<meta name="twitter:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。">
 <meta name="twitter:image" content="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/mysql逻辑架构.png">
   
     <link rel="alternate" href="/atom.xml" title="凡心所向，素履所往" type="application/atom+xml">
@@ -95,6 +95,7 @@
         <p>1.1 逻辑架构</p>
 <p><img src="/uncategorized/高性能MySQl读书笔记-第一天-md/mysql逻辑架构.png" alt="Mysql逻辑架构"></p>
 <p>第一层：客户端/服务器的连接、授权认证、安全等。</p>
+<a id="more"></a>
 <p>第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。</p>
 <p>第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==。存储引擎不会去解析SQL（InnoDB除外，它会解析外键定义）。不同存储引擎之间也不会互相通信，只是简单地响应上层服务器的请求。</p>
 <h3 id="1-1-1-连接管理与安全性"><a href="#1-1-1-连接管理与安全性" class="headerlink" title="1.1.1 连接管理与安全性"></a>1.1.1 连接管理与安全性</h3><p>每个客户端连接都是单线程，轮流在某个CPU核心或CPU中运行。服务器会负责缓存线程，因此不需要为每个新建的连接创建或销毁线程（MySQL 5.5 或更新的版本提供啦一个API，支持线程池插件，可以使用池中少量的线程来服务大量的连接）。</p>
@@ -116,9 +117,7 @@
 <p>行级锁可以最大程度地支持并发处理（同时也带来了最大的锁开销）。==行级锁只在存储引擎层实现==。</p>
 <h2 id="1-3-事务"><a href="#1-3-事务" class="headerlink" title="1.3 事务"></a>1.3 事务</h2><p><strong>ACID</strong></p>
 <p>原子性（atomicity)</p>
-<blockquote>
 <p>一个事务必须被视为一个不可分割的最小工作单元，整个事务中的所有操作，要么全部提交成功，要么全部失败会滚。</p>
-</blockquote>
 <p>一致性（consistency)</p>
 <blockquote>
 <p>数据库总是从一个一致性的状态转换到另一个一致性的状态。在前面的例子中，一致性确保了，即使在执行第三、四条语句之间时系统崩溃，事务中所做的修改也不会保存到数据库中，系统中的数据也不会更新。</p>
@@ -143,12 +142,10 @@
 <p>解释：多次读取同一条记录，每次读取到的记录内容可能不一致。</p>
 </blockquote>
 <p>==REPEATABLE READ（可重复读）==</p>
-<blockquote>
 <p>解决了脏读。该级别保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读（Phantom Read）。幻读指当某个事物在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行（Phantom Row）。InnoDB和XtraDB存储引擎通过多版本并发控制（MVCC）解决了幻读的问题。</p>
 <p>解释：多次读取同一条记录，每次读取到的记录内容一致。</p>
 <p><a href="https://segmentfault.com/a/1190000012669504" target="_blank" rel="noopener">幻读</a>：多次读取某个范围内的多条记录时，由于同时有数据新增或删除，会导致再次读取时，某个范围内的记录增加或减少，导致多次读取结果不一致。</p>
 <p>可重复读诗MySQL的默认事务隔离级别</p>
-</blockquote>
 <p>SERIALIZABLE（可串行化）</p>
 <blockquote>
 <p>最高的隔离级别。它通过强制事务串行执行，避免了前面的幻读问题。它会在读取的每一行数据上都加锁，所以可能导致大量的超时和锁争用的问题。</p>
@@ -157,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm0qfm30001a76ij25rgm1o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm13s2m0001eg6ijvj1gnld" class="article-share-link">Share</a>
       
       
     </footer>
