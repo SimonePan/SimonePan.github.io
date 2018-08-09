@@ -21,7 +21,7 @@
     <link rel="alternate" href="/atom.xml" title="凡心所向，素履所往" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
@@ -139,10 +139,13 @@
 <p>READ COMMITED（提交读）</p>
 <blockquote>
 <p>大多数默认数据库的默认隔离级别（但MySQL不是）。一个事务开始时，只能“看见”已经提交的事务所做的修改。这也叫不可重复读（Nonrepeatable Read），因为两次执行同样的查询，可能会得到不一样的结果。</p>
+<p>解释：多次读取同一条记录，每次读取到的记录内容可能不一致。</p>
 </blockquote>
 <p>==REPEATABLE READ（可重复读）==</p>
 <blockquote>
 <p>解决了脏读。该级别保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读（Phantom Read）。幻读指当某个事物在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行（Phantom Row）。InnoDB和XtraDB存储引擎通过多版本并发控制（MVCC）解决了幻读的问题。</p>
+<p>解释：多次读取同一条记录，每次读取到的记录内容一致。</p>
+<p><a href="https://segmentfault.com/a/1190000012669504" target="_blank" rel="noopener">幻读</a>：多次读取某个范围内的多条记录时，由于同时有数据新增或删除，会导致再次读取时，某个范围内的记录增加或减少，导致多次读取结果不一致。</p>
 <p>可重复读诗MySQL的默认事务隔离级别</p>
 </blockquote>
 <p>SERIALIZABLE（可串行化）</p>
@@ -153,43 +156,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjklxp3890002dx6i26wfwmxe" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-My-First-Article" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/uncategorized/My-First-Article/" class="article-date">
-  <time datetime="2018-08-07T06:43:28.000Z" itemprop="datePublished">2018-08-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/uncategorized/My-First-Article/">My First Article</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/My-First-Article/" data-id="cjklxp3810000dx6in3ymk511" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm0qfm30001a76ij25rgm1o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -234,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/hello-world/" data-id="cjklxp3870001dx6iowx1pd6i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/uncategorized/hello-world/" data-id="cjkm0qfly0000a76i5x799idx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -276,10 +243,6 @@
         
           <li>
             <a href="/uncategorized/高性能MySQl读书笔记-第一天-md/">高性能MySQl读书笔记-第一天.md</a>
-          </li>
-        
-          <li>
-            <a href="/uncategorized/My-First-Article/">My First Article</a>
           </li>
         
           <li>

@@ -15,7 +15,7 @@
 <meta property="og:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。 第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。 第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/mysql逻辑架构.png">
-<meta property="og:updated_time" content="2018-08-09T02:15:46.734Z">
+<meta property="og:updated_time" content="2018-08-09T03:03:05.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能MySQl读书笔记-第一天.md">
 <meta name="twitter:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。 第二层：查询解析，分析，优化，缓存，内置函数（日期，时间，数学，加密等），存储过程，触发器，视图等。 第三层：存储引擎，负责数据的存取。服务器通过API与存储引擎通信。存储引擎API包含几十个底层函数，用于执行诸如”开始一个事务“或”根据主键提取一行记录“等操作。==每种存储引擎都可以实现自己的锁策略、锁粒度、事务和隔离级别==">
@@ -24,7 +24,7 @@
     <link rel="alternate" href="/atom.xml" title="凡心所向，素履所往" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
@@ -140,10 +140,13 @@
 <p>READ COMMITED（提交读）</p>
 <blockquote>
 <p>大多数默认数据库的默认隔离级别（但MySQL不是）。一个事务开始时，只能“看见”已经提交的事务所做的修改。这也叫不可重复读（Nonrepeatable Read），因为两次执行同样的查询，可能会得到不一样的结果。</p>
+<p>解释：多次读取同一条记录，每次读取到的记录内容可能不一致。</p>
 </blockquote>
 <p>==REPEATABLE READ（可重复读）==</p>
 <blockquote>
 <p>解决了脏读。该级别保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读（Phantom Read）。幻读指当某个事物在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行（Phantom Row）。InnoDB和XtraDB存储引擎通过多版本并发控制（MVCC）解决了幻读的问题。</p>
+<p>解释：多次读取同一条记录，每次读取到的记录内容一致。</p>
+<p><a href="https://segmentfault.com/a/1190000012669504" target="_blank" rel="noopener">幻读</a>：多次读取某个范围内的多条记录时，由于同时有数据新增或删除，会导致再次读取时，某个范围内的记录增加或减少，导致多次读取结果不一致。</p>
 <p>可重复读诗MySQL的默认事务隔离级别</p>
 </blockquote>
 <p>SERIALIZABLE（可串行化）</p>
@@ -154,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjklxp3890002dx6i26wfwmxe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm0qfm30001a76ij25rgm1o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -164,9 +167,9 @@
 <nav id="article-nav">
   
   
-    <a href="/uncategorized/My-First-Article/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/uncategorized/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">My First Article</div>
+      <div class="article-nav-title">Hello World</div>
     </a>
   
 </nav>
@@ -204,10 +207,6 @@
         
           <li>
             <a href="/uncategorized/高性能MySQl读书笔记-第一天-md/">高性能MySQl读书笔记-第一天.md</a>
-          </li>
-        
-          <li>
-            <a href="/uncategorized/My-First-Article/">My First Article</a>
           </li>
         
           <li>
