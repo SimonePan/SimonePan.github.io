@@ -15,7 +15,7 @@
 <meta property="og:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/mysql逻辑架构.png">
-<meta property="og:updated_time" content="2018-08-09T03:54:24.147Z">
+<meta property="og:updated_time" content="2018-08-09T06:04:39.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能MySQl读书笔记-第一天.md">
 <meta name="twitter:description" content="1.1 逻辑架构  第一层：客户端/服务器的连接、授权认证、安全等。">
@@ -24,7 +24,7 @@
     <link rel="alternate" href="/atom.xml" title="凡心所向，素履所往" type="application/atom+xml">
   
   
-    <link rel="icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.ico">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
@@ -115,33 +115,22 @@
 <p>尽管存储引擎可以管理自己的锁，MySQL本身还是会使用各种有效的表锁来实现不同的目的。例如，服务器会为诸如ALTER TABLE之类的语句使用表锁，而忽略存储引擎的锁机制。</p>
 <p><strong>行级锁（row lock)</strong></p>
 <p>行级锁可以最大程度地支持并发处理（同时也带来了最大的锁开销）。==行级锁只在存储引擎层实现==。</p>
-<h2 id="1-3-事务"><a href="#1-3-事务" class="headerlink" title="1.3 事务"></a>1.3 事务</h2><p><strong>ACID</strong></p>
-<p>原子性（atomicity)</p>
+<h2 id="1-3-事务"><a href="#1-3-事务" class="headerlink" title="1.3 事务"></a>1.3 事务</h2><p><strong>原子性（atomicity)</strong></p>
 <p>一个事务必须被视为一个不可分割的最小工作单元，整个事务中的所有操作，要么全部提交成功，要么全部失败会滚。</p>
-<p>一致性（consistency)</p>
-<blockquote>
+<p><strong>一致性（consistency)</strong></p>
 <p>数据库总是从一个一致性的状态转换到另一个一致性的状态。在前面的例子中，一致性确保了，即使在执行第三、四条语句之间时系统崩溃，事务中所做的修改也不会保存到数据库中，系统中的数据也不会更新。</p>
-</blockquote>
-<p>隔离性（isolation)</p>
-<blockquote>
+<p><strong>隔离性（isolation)</strong></p>
 <p>事务所做的修改在最终提交前，通常来说，对其他事务是不可见的。例如，事务A：原本余额100，扣除余额100。当事务A没提交前，事务B去获取余额，看到的金额为100。<strong>实际情况须依据1.3.1隔离级别</strong></p>
-</blockquote>
-<p>持久性（durability)</p>
-<blockquote>
+<p><strong>持久性（durability)</strong></p>
 <p>一旦事务提交，则所做的修改就会永久的保存在数据库中。</p>
-</blockquote>
 <p>就像锁粒度的升级会增加系统开销一样，这种事务处理过程中额外的安全性，也会需要数据库系统做更多的额外工作。一个实现了ACID的数据库，通常会需要更强的CPU、更大的内存和更多的磁盘空间。</p>
 <h3 id="1-3-1-隔离级别"><a href="#1-3-1-隔离级别" class="headerlink" title="1.3.1 隔离级别"></a>1.3.1 隔离级别</h3><p>==每种存储引擎实现的隔离级别不尽相同。==</p>
-<p>READ UNCOMMITTED（未提交读）</p>
-<blockquote>
+<p><strong>READ UNCOMMITTED（未提交读）</strong></p>
 <p>事务中的修改，即使没提交，对其他事务也都是可见的。这也称脏读（Dirty Read）。这个级别，从性能上，并没有比其他级别好太多，但却缺乏其他级别的好处。</p>
-</blockquote>
-<p>READ COMMITED（提交读）</p>
-<blockquote>
+<p><strong>READ COMMITED（提交读）</strong></p>
 <p>大多数默认数据库的默认隔离级别（但MySQL不是）。一个事务开始时，只能“看见”已经提交的事务所做的修改。这也叫不可重复读（Nonrepeatable Read），因为两次执行同样的查询，可能会得到不一样的结果。</p>
 <p>解释：多次读取同一条记录，每次读取到的记录内容可能不一致。</p>
-</blockquote>
-<p>==REPEATABLE READ（可重复读）==</p>
+<p><strong>==REPEATABLE READ（可重复读）==</strong></p>
 <p>解决了脏读。该级别保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读（Phantom Read）。幻读指当某个事物在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行（Phantom Row）。InnoDB和XtraDB存储引擎通过多版本并发控制（MVCC）解决了幻读的问题。</p>
 <p>解释：多次读取同一条记录，每次读取到的记录内容一致。</p>
 <p><a href="https://segmentfault.com/a/1190000012669504" target="_blank" rel="noopener">幻读</a>：多次读取某个范围内的多条记录时，由于同时有数据新增或删除，会导致再次读取时，某个范围内的记录增加或减少，导致多次读取结果不一致。</p>
@@ -154,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm13s2m0001eg6ijvj1gnld" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/uncategorized/高性能MySQl读书笔记-第一天-md/" data-id="cjkm5vhz30001oq6iezp9i5q4" class="article-share-link">Share</a>
       
       
     </footer>
